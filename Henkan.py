@@ -7,9 +7,8 @@ from PIL import Image, ImageTk
 import os
 import requests
 
-#---YoutubeDL functions
+#---YoutubeDL_Options---
 
-#video_name='https://www.youtube.com/watch?v=GGQygrKegFc'
 
 
 ydl_opts = {
@@ -22,15 +21,17 @@ ydl_opts = {
 }
 
 
-#with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#	ydl.download([video_name])
-
 
 #---Functions---
+
+
+#Ask for url
 def passUrlData(url=0):
 	url = simpledialog.askstring("Enter URL", "Please Enter a Youtube Video Link")
 	addDownloadItem(url)
 
+
+#Get a comfortable size for the file
 def getStandardSize(size):
 	itme = ['bytes','KB','MB','GB','TB']
 
@@ -41,6 +42,9 @@ def getStandardSize(size):
 
 	return size
 
+
+
+#Add a new Download Item
 def addDownloadItem(url):
 
 	if url != None:
@@ -48,7 +52,6 @@ def addDownloadItem(url):
 		req = requests.get(url, stream=True)
 
 		try:
-
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:			
 				total_size = ydl.filesize[url]
 		except:
@@ -57,8 +60,6 @@ def addDownloadItem(url):
 
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 				fname = "file" #ydl.tittle(url)
-
-
 
 		frame2=Frame(window,bg="red", height="5")
 		frame2.pack(fill="x",expand=False, pady=10)
@@ -105,11 +106,6 @@ def addDownloadItem(url):
 
 		percentg=round((int(current_size)/int(total_size))*100)
 		progress['value']=percentg
-
-
-
-
-
 
 
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
